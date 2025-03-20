@@ -1,0 +1,11 @@
+spring:
+  config:
+    import: secrets.yml
+  data:
+    mongodb:
+      port: 25565
+      database: communicatorDB
+application:
+  security:
+    jwt:
+      access-token-expiration: 604800000

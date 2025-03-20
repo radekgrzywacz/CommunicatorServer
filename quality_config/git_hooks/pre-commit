@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+
+# Run Checkstyle
+echo "Running Checkstyle..."
+mvn checkstyle:check
+CHECKSTYLE_EXIT_CODE=$?
+
+# Run PMD
+echo "Running PMD..."
+mvn pmd:check
+PMD_EXIT_CODE=$?
+
+# Run SpotBugs
+#echo "Running SpotBugs..."
+#mvn spotbugs:check
+#SPOTBUGS_EXIT_CODE=$?
+
+# If any of the tools fail, prevent the commit
+if [ $CHECKSTYLE_EXIT_CODE -ne 0 ] || [ $PMD_EXIT_CODE -ne 0 ] || [ $SPOTBUGS_EXIT_CODE -ne 0 ]; then
+  echo "Pre-commit checks failed. Please fix the issues before committing."
+  exit 1
+fi
+
+echo "Pre-commit checks passed!"
+
